@@ -1,5 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+    const searchInput = document.getElementById('searchInput');
+    const agentGrid = document.getElementById('agent-grid');
+    // Ottiene tutte le card degli agenti
+    const agentCards = agentGrid.getElementsByClassName('agent-card');
+
+    // Aggiunge un ascoltatore per ogni tasto premuto nella barra di ricerca
+    searchInput.addEventListener('keyup', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+
+        // Itera su ogni card
+        for (let card of agentCards) {
+            // Legge il nome dell'agente dal 'data-name' o dal 'h2'
+            const agentName = card.dataset.name.toLowerCase() || card.querySelector('h2').textContent.toLowerCase();
+
+            // Controlla se il nome dell'agente include il testo di ricerca
+            if (agentName.includes(searchTerm)) {
+                card.style.display = 'block'; // Mostra la card
+            } else {
+                card.style.display = 'none'; // Nasconde la card
+            }
+        }
+    });
+
+    console.log("Database Personale MIB caricato. Non stai vedendo nulla.");
     // --- Funzione Ora Corrente ---
     function updateTime() {
         const now = new Date();

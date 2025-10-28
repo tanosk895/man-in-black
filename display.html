@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>MIB - Schermo Principale</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="display-container">
+        
+        <div id="display-lobby">
+            <h1>MIB TRAINING</h1>
+            <p>Agenti, collegatevi ora usando i vostri dispositivi!</p>
+            <h3>Agenti in attesa:</h3>
+            <ul id="lobby-player-list"></ul>
+        </div>
+
+        <div id="display-question" class="hidden">
+            <h2 id="question-text"></h2>
+            <div id="player-answers-display"></div>
+        </div>
+
+        <div id="display-scores" class="hidden">
+            <h1>PUNTEGGI</h1>
+        </div>
+    </div>
+    
+    <script src="js/game-state.js"></script>
+    <script src="js/display.js"></script>
+</body>
+</html>

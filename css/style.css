@@ -464,3 +464,426 @@ footer {
     .agent-details p { font-size: 0.95em; }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #0d1117;
+    --text-color: #00ffc8;
+    --text-secondary: #a7c0ba;
+    --border-color: #004d3d;
+    --card-bg: #161b22;
+    --warning-color: #ffcc00; /* Giallo */
+    --danger-color: #ff0000; /* Rosso */
+    --active-color: #32cd32; /* Verde lime */
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-secondary);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+header h1 {
+    font-family: 'Aldrich', sans-serif;
+    color: var(--text-color);
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
+}
+
+header p {
+    font-size: 1.1em;
+    color: var(--text-secondary);
+}
+
+/* Barra Filtri */
+.filter-bar {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1em;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: var(--text-color);
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+}
+
+/* Griglia Agenti */
+.agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.agent-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden; /* Per la foto */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.agent-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--text-color);
+    box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+}
+
+.agent-photo {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Copre lo spazio senza distorcere */
+    object-position: top; /* Mette a fuoco la parte superiore dell'immagine */
+    border-bottom: 1px solid var(--border-color);
+    filter: grayscale(0.5); /* Leggermente desaturato per un look da database */
+    transition: filter 0.3s ease;
+}
+
+.agent-card:hover .agent-photo {
+    filter: grayscale(0);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-content h2 {
+    font-family: 'Aldrich', sans-serif;
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.6em;
+}
+
+.card-content p {
+    margin: 8px 0;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.card-content .label {
+    color: rgba(0, 255, 200, 0.7); /* Verde più scuro per l'etichetta */
+    font-weight: 700;
+    margin-right: 8px;
+}
+
+/* Status Agenti */
+.status {
+    font-weight: 700;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+.status.active {
+    color: var(--active-color);
+}
+.status.warning {
+    color: var(--warning-color);
+}
+.status.danger {
+    color: var(--danger-color);
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Nasconde le card per il JS */
+.hidden {
+    display: none;
+}
+
+
+/************************************/
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #0d1117;
+    --text-color: #00ffc8; /* Verde neon */
+    --text-secondary: #a7c0ba;
+    --border-color: #004d3d; /* Verde scuro per bordi */
+    --card-bg: #161b22;
+    --danger-color: #ff0000;
+    --warning-color: #ffcc00; /* Giallo avviso */
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-secondary);
+    margin: 0;
+    padding: 20px;
+    position: relative; /* Per l'effetto scanline */
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* --- EFFETTO SCANLINE MIB --- */
+/* Lo applichiamo a tutto lo sfondo */
+body::after {
+    content: "";
+    position: fixed; /* Fisso sullo schermo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 255, 200, 0.03) 1px, transparent 4px);
+    background-size: 100% 4px;
+    animation: scanline 15s linear infinite;
+    pointer-events: none;
+    z-index: -1; /* Dietro a tutto */
+}
+
+@keyframes scanline {
+    from { background-position-y: 0; }
+    to { background-position-y: 100px; }
+}
+/* --- FINE EFFETTO SCANLINE --- */
+
+
+h1, h2, h3 {
+    font-family: 'Aldrich', sans-serif;
+    color: var(--text-color);
+    /* Aggiungiamo il bagliore MIB */
+    text-shadow: 0 0 8px rgba(0, 255, 200, 0.6);
+    letter-spacing: 1px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- STILE CONTENITORI MIB --- */
+/* Applichiamo lo stile del dossier a tutti i contenitori del gioco */
+.player-container, .dashboard-container, .display-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: rgba(22, 27, 34, 0.85); /* Leggermente trasparente (var(--card-bg)) */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    /* Aggiungiamo il bagliore MIB */
+    box-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+    backdrop-filter: blur(3px); /* Effetto vetro per far vedere la scanline sotto */
+    position: relative;
+    z-index: 2;
+}
+
+/* Stile Giocatore (Telefoni) */
+input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1em;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--text-color);
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+}
+
+button {
+    font-family: 'Aldrich', sans-serif;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    /* Aggiungiamo il bagliore MIB */
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+}
+button:hover {
+    background-color: white;
+    color: var(--bg-color);
+    box-shadow: 0 0 20px white;
+    transform: scale(1.02);
+}
+button.danger {
+    background-color: var(--danger-color);
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+button.danger:hover {
+    background-color: #ff4d4d;
+    box-shadow: 0 0 20px #ff4d4d;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+.answer-btn {
+    width: 100%;
+    height: 100px;
+    font-size: 1.2em;
+    background-color: var(--card-bg); /* Sfondo scuro */
+    color: var(--text-color); /* Testo neon */
+    border: 1px solid var(--border-color);
+    box-shadow: none; /* Rimuovi bagliore di default */
+}
+.answer-btn:hover {
+    background-color: var(--text-color); /* Inverti i colori all'hover */
+    color: var(--bg-color);
+    border-color: var(--text-color);
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.7);
+}
+.small-text {
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* Stile Dashboard (Admin) */
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Per mobile */
+}
+#player-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    background: rgba(13, 17, 23, 0.7); /* var(--bg-color) con trasparenza */
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+#player-list li {
+    padding: 8px;
+    border-bottom: 1px dotted var(--border-color);
+}
+#player-list li:last-child {
+    border-bottom: none;
+}
+
+/* Stile Display (TV/Schermo) */
+.display-container {
+    text-align: center;
+    /* Diamo un bordo diverso allo schermo principale per distinguerlo */
+    border-color: var(--warning-color); 
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.4); /* Bagliore giallo */
+}
+#lobby-player-list {
+    font-size: 1.5em;
+    list-style: none;
+    padding: 0;
+}
+#lobby-player-list li {
+    padding: 5px;
+    animation: fadeIn 0.5s ease-out; /* Effetto per i nuovi giocatori */
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#question-text {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: var(--warning-color); /* Giallo per la domanda */
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+}
+
+.player-status-bubble {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    margin: 5px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.player-status-bubble.answered {
+    background: var(--text-color);
+    color: var(--bg-color);
+    border-color: var(--text-color);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--text-color);
+}
+/* --- AGGIUNTE PER PLAYER CONTROLLER --- */
+
+/* Stile per la domanda sul controller */
+.question-text-small {
+    font-size: 1.1em;
+    color: var(--text-secondary); /* Colore secondario, non neon */
+    margin-bottom: 20px;
+    border-bottom: 1px dotted var(--border-color);
+    padding-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* Stile per il testo di attesa simpatico */
+#post-answer-screen h2 {
+    color: var(--warning-color); /* Giallo avviso */
+    text-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+}
+
+.funny-wait-text {
+    font-size: 1.1em;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 10px 20px;
+    animation: pulseText 2s infinite ease-in-out;
+}
+
+/* Animazione pulsante per l'attesa */
+@keyframes pulseText {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}

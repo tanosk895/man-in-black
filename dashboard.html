@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>MIB - Dashboard QG</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Dashboard QG (Livello 9)</h1>
+        
+        <div class="controls">
+            <button id="start-game-btn">AVVIA GIOCO</button>
+            <button id="next-question-btn">PROSSIMA DOMANDA</button>
+            <button id="reset-game-btn" class="danger">RESET GIOCO COMPLETO</button>
+        </div>
+        
+        <h2>Stato: <span id="game-status-display">...</span></h2>
+        
+        <h2>Agenti Connessi:</h2>
+        <ul id="player-list"></ul>
+    </div>
+    
+    <script src="js/game-state.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

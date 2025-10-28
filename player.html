@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIB - Controller</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="player-container">
+        <h1>Terminale Agente</h1>
+        
+        <div id="join-screen">
+            <h3>Identificazione</h3>
+            <input type="text" id="name-input" placeholder="Inserisci nome Agente...">
+            <button id="join-btn">Entra in Servizio</button>
+        </div>
+
+        <div id="waiting-screen" class="hidden">
+            <h2 id="welcome-message">Ciao, Agente...</h2>
+            <p>In attesa di ordini dal QG...</p>
+            <p class="small-text">Il tuo ID (non toccare): <span id="player-id-display"></span></p>
+        </div>
+
+        <div id="game-screen" class="hidden">
+            <p id="player-question-text" class="question-text-small"></p>
+            
+            <h3>Rispondi!</h3>
+            <div id="answer-options" class="options-grid">
+                </div>
+        </div>
+        
+        <div id="post-answer-screen" class="hidden">
+            <h2>Risposta Inviata.</h2>
+            <p class="funny-wait-text">Dati in transito verso il QG... Non farti neuralizzare nell'attesa. Stiamo controllando se hai fatto casino.</p>
+        </div>
+    </div>
+    
+    <script src="js/game-state.js"></script>
+    <script src="js/player.js"></script>
+</body>
+</html>
