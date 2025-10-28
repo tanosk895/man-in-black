@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIB | Database Personale</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>MIB | DATABASE PERSONALE</h1>
+            <p>Accesso Livello 7. Solo per consultazione.</p>
+        </header>
+
+        <div class="filter-bar">
+            <input type="text" id="searchInput" placeholder="Cerca agente per nome o ID...">
+        </div>
+
+        <main id="agent-grid" class="agent-grid">
+
+            <div class="agent-card" data-name="Agente K">
+                <img src="tano.png" alt="Agente K" class="agent-photo">
+                <div class="card-content">
+                    <h2>Agente K</h2>
+                    <p><span class="label">ID:</span> 001-K</p>
+                    <p><span class="label">Specie:</span> Umana</p>
+                    <p><span class="label">Status:</span> <span class="status active">ATTIVO (Di nuovo)</span></p>
+                    <p><span class="label">Nota:</span> Fondatore. Ha visto tutto. Probabilmente troppo.</p>
+                </div>
+            </div>
+
+            <div class="agent-card" data-name="Agente J">
+                <img src="tano.png" alt="Agente J" class="agent-photo">
+                <div class="card-content">
+                    <h2>Agente J</h2>
+                    <p><span class="label">ID:</span> 723-J</p>
+                    <p><span class="label">Specie:</span> Umana</p>
+                    <p><span class="label">Status:</span> <span class="status active">ATTIVO</span></p>
+                    <p><span class="label">Nota:</span> Fa ancora troppe domande. Non lasciargli guidare la LTD.</p>
+                </div>
+            </div>
+            
+            <div class="agent-card" data-name="Agente O">
+                <img src="tano.png" alt="Agente O" class="agent-photo">
+                <div class="card-content">
+                    <h2>Agente O</h2>
+                    <p><span class="label">ID:</span> 001-O (Direttore)</p>
+                    <p><span class="label">Specie:</span> Umana</p>
+                    <p><span class="label">Status:</span> <span class="status active">ATTIVO (Direttore)</span></p>
+                    <p><span class="label">Nota:</span> Gestisce l'intera baracca. Non farla arrabbiare.</p>
+                </div>
+            </div>
+
+
+
+        </main>
+        
+        <footer>
+            <p>Proprietà del Quartier Generale MIB. L'accesso non autorizzato comporterà la neuralizzazione immediata.</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
