@@ -183,7 +183,7 @@ section:hover {
     flex-shrink: 0;
     width: 200px;
     height: 200px;
-    border-radius: 20%;
+    border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--text-color);
     box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
@@ -463,3 +463,4 @@ footer {
     .agent-photo { width: 200px; height: 200px; }
     .agent-details p { font-size: 0.95em; }
 }
+
