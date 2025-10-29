@@ -29,21 +29,21 @@ function generateID() {
 
 // --- Logica di Join (Sintassi v9+) ---
 joinBtn.addEventListener('click', () => {
-    if (!myPlayerID) {
-        myPlayerID = generateID();
-        localStorage.setItem('mibPlayerID', myPlayerID);
-    }
-    
-    // v9: child(riferimento, percorso)
-    const playerRef = child(gameRef, 'players/' + myPlayerID);
-    
-    // v9: set(riferimento, valore)
-    set(playerRef, {
-        name: nameInput.value || 'Recluta',
-        score: 0,
-        answer: null,
-        joinedAt: serverTimestamp() 
-    });
+  if (!myPlayerID) {
+    myPlayerID = generateID();
+    localStorage.setItem('mibPlayerID', myPlayerID);
+  }
+  
+  // v9: child(riferimento, percorso)
+  const playerRef = child(gameRef, 'players/' + myPlayerID);
+  
+  // v9: set(riferimento, valore)
+  set(playerRef, {
+    name: nameInput.value || 'Recluta',
+    score: 0,
+    answer: null,
+    joinedAt: serverTimestamp() 
+  });
 });
 // --- Funzione UI (CORRETTA) ---
 function updateUI(gameState) {
