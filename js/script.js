@@ -1,29 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // --- Sezione 1: Logica di Ricerca (Solo per la pagina Griglia) ---
-    const searchInput = document.getElementById('searchInput');
-    const agentGrid = document.getElementById('agent-grid');
-
-    // CONTROLLO: Esegui solo se esistono sia la barra di ricerca SIA la griglia
-    if (searchInput && agentGrid) {
-        const agentCards = agentGrid.getElementsByClassName('col'); // Aggiornato a 'col' per Bootstrap
-
-        searchInput.addEventListener('keyup', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-
-            for (let card of agentCards) {
-                // Cerca il nome nel 'data-name' (che è sulla 'col')
-                const agentName = card.dataset.name.toLowerCase();
-
-                if (agentName.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            }
-        });
-    }
-
+  
     // --- Sezione 2: Ora Corrente (Solo per la pagina Dossier) ---
     const currentTimeEl = document.getElementById('currentTime');
 

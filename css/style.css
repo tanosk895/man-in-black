@@ -271,6 +271,9 @@ h1, h2, h3, h4, h5, h6,
     50% { border-color: var(--text-color) } 
 }
 
+.card {
+    color: whitesmoke;
+}
 
 /* --- 6. EFFETTO GLITCH (MIGLIORATO E RIUTILIZZABILE) --- */
 /* * Per usarlo, metti questo nel tuo HTML:
