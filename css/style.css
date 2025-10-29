@@ -1,662 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
 
+/* --- 1. PALETTE MIB UNIFICATA --- */
 :root {
-    --bg-color: #0d1117;
-    --text-color: #00ffc8; /* Verde neon vibrante */
-    --accent-color: #007bff; /* Blu elettrico */
-    --border-color: #004d3d; /* Verde scuro per i bordi */
-    --header-bg: #1a1a2e;
-    --card-bg: #161b22;
-    --warning-color: #ff0000;
+    --bg-color: #0d1117;          /* Sfondo nero tecnico */
+    --card-bg: #161b22;         /* Sfondo scheda (leggermente più chiaro) */
+    --border-color: #004d3d;    /* Verde scuro per bordi */
+    
+    --text-color: #00ffc8;      /* Verde neon (primario) */
+    --text-secondary: #a7c0ba;  /* Testo grigio-verde (meno importante) */
+    
+    --accent-color: #00aeff;    /* Blu elettrico (secondario) */
+    --warning-color: #ffcc00;   /* Giallo avviso */
+    --danger-color: #ff0000;    /* Rosso allarme / Neuralizzatore */
+    --active-color: #32cd32;    /* Verde lime (Stato "Attivo") */
+    --text-secondary: #b0c5c0; /* Era #a7c0ba, questo è più chiaro */
 }
 
-body {
-    font-family: 'Roboto Mono', monospace;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+/* --- 2. IMPOSTAZIONI GLOBALI E SFONDO --- */
+*, *::before, *::after {
     box-sizing: border-box;
-    overflow-x: hidden;
-}
-
-/* Effetto Flash */
-#flash-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: opacity 0.05s ease-out;
-}
-
-/* Effetto Scanline sul container */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
-    padding: 30px;
-    border-radius: 8px;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 30px;
-    position: relative; /* Per le scanline */
-    overflow: hidden; /* Per le scanline */
-}
-
-/* Animazione Scanline */
-.container::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 255, 200, 0.05) 1px, transparent 4px);
-    background-size: 100% 4px;
-    animation: scanline 10s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes scanline {
-    from { background-position-y: 0; }
-    to { background-position-y: 100px; }
-}
-
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    z-index: 2;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo img {
-    height: 50px;
-    filter: drop-shadow(0 0 5px var(--text-color));
-}
-
-.logo h1 {
-    font-family: 'Aldrich', sans-serif;
-    font-size: 1.8em;
-    color: var(--text-color);
-    letter-spacing: 2px;
-    margin: 0;
-    text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9em;
-    color: rgba(0, 255, 200, 0.7);
-}
-
-.online-indicator {
-    width: 10px;
-    height: 10px;
-    background-color: var(--text-color);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--text-color);
-    animation: pulse 1.5s infinite alternate;
-}
-
-@keyframes pulse {
-    from { transform: scale(0.8); opacity: 0.7; }
-    to { transform: scale(1.2); opacity: 1; }
-}
-
-main {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-    z-index: 2;
-}
-
-section {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 25px;
-    box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-section:hover {
-    box-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
-    transform: translateY(-3px);
-}
-
-.agent-profile {
-    grid-column: 1 / 2;
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-header h2 {
-    font-family: 'Aldrich', sans-serif;
-    font-size: 1.5em;
-    color: var(--text-color);
-    text-align: center;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    position: relative;
-}
-
-.profile-header h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 2px;
-    background-color: var(--text-color);
-    margin: 10px auto 0;
-    box-shadow: 0 0 8px var(--text-color);
-}
-
-.profile-content {
-    display: flex;
-    gap: 30px;
-    flex-grow: 1;
-}
-
-.agent-photo {
-    flex-shrink: 0;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--text-color);
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
-    background-color: #000;
-}
-
-.agent-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: filter 0.3s ease;
-}
-
-.agent-photo img:hover {
-    filter: brightness(1.2) contrast(1.1);
-}
-
-.agent-details {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.agent-details p {
-    margin: 8px 0;
-    font-size: 1.1em;
-    line-height: 1.4;
-}
-
-.agent-details .label {
-    color: rgba(0, 255, 200, 0.7);
-    font-weight: 700;
-    margin-right: 10px;
-}
-
-.agent-details .data {
-    color: var(--text-color);
-}
-
-.agent-details .data.active {
-    color: var(--text-color);
-    font-weight: bold;
-}
-.agent-details .data.clearance {
-    color: #ffcc00;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
-}
-
-/* Effetto Glitch */
-.glitch-wrapper {
-    display: inline-block;
-    position: relative;
-}
-.glitch-wrapper .data {
-    position: relative;
-    z-index: 1;
-}
-.glitch-wrapper::before,
-.glitch-wrapper::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--card-bg); /* Nasconde il testo originale sotto */
-    z-index: 0;
-}
-.glitch-wrapper::before {
-    content: "Kay, Kevin Brown"; /* Deve corrispondere al testo */
-    left: 2px;
-    text-shadow: -2px 0 var(--warning-color);
-    animation: glitch 3s infinite linear alternate-reverse;
-}
-.glitch-wrapper::after {
-    content: "Kay, Kevin Brown"; /* Deve corrispondere al testo */
-    left: -2px;
-    text-shadow: 2px 0 var(--accent-color);
-    animation: glitch 2s infinite linear alternate-reverse;
-}
-
-@keyframes glitch {
-    0% { clip-path: inset(10% 0 80% 0); }
-    20% { clip-path: inset(50% 0 30% 0); }
-    40% { clip-path: inset(20% 0 65% 0); }
-    60% { clip-path: inset(70% 0 10% 0); }
-    80% { clip-path: inset(90% 0 1% 0); }
-    100% { clip-path: inset(40% 0 45% 0); }
-}
-
-
-.equipment-inventory,
-.operational-history {
-    grid-column: 2 / 3;
-    display: flex;
-    flex-direction: column;
-}
-
-h3 {
-    font-family: 'Aldrich', sans-serif;
-    font-size: 1.2em;
-    color: var(--text-color);
-    margin-top: 0;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    border-bottom: 1px dashed rgba(0, 255, 200, 0.3);
-    padding-bottom: 10px;
-    text-shadow: 0 0 8px rgba(0, 255, 200, 0.4);
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-ul li {
-    margin-bottom: 12px;
-    font-size: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px dotted rgba(0, 255, 200, 0.1);
-}
-
-ul li:last-child {
-    border-bottom: none;
-}
-
-.item {
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-.date {
-    color: rgba(0, 255, 200, 0.7);
-    font-style: italic;
-}
-
-.status-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left: 10px;
-}
-
-.status-indicator.online {
-    background-color: #32cd32;
-    box-shadow: 0 0 5px #32cd32;
-}
-
-.status-indicator.offline {
-    background-color: var(--warning-color);
-    box-shadow: 0 0 5px var(--warning-color);
-}
-
-/* Stile Tooltip */
-.tooltip {
-    position: relative;
-    cursor: help;
-}
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 220px;
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    font-family: 'Roboto Mono', monospace;
-    font-weight: 700;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 12px;
-    position: absolute;
-    z-index: 10;
-    bottom: 125%; /* Posiziona sopra l'elemento */
-    left: 50%;
-    margin-left: -110px; /* Metà della larghezza */
-    opacity: 0;
-    transition: opacity 0.3s;
-    box-shadow: 0 0 10px rgba(0, 255, 200, 0.7);
-}
-.tooltip .tooltiptext::after { /* Freccia */
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--text-color) transparent transparent transparent;
-}
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Animazione "Typing" (Caret) */
-#history-list li {
-    overflow: hidden; /* Assicura che il testo non appaia prima dell'animazione */
-    white-space: nowrap; /* Mantiene il testo su una linea */
-    animation: typing 2s steps(40, end);
-    /* JS gestirà l'aggiunta delle classi per animazioni staggered */
-}
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
-
-footer {
-    text-align: center;
-    font-size: 0.85em;
-    color: rgba(0, 255, 200, 0.6);
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-    z-index: 2;
-}
-
-.security-status {
-    margin-top: 10px;
-    font-weight: bold;
-    color: var(--warning-color);
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
-    animation: blink 1s infinite steps(1, start);
-}
-
-@keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* Pulsante Neuralizzatore */
-.neuralyzer {
-    font-family: 'Aldrich', sans-serif;
-    background-color: var(--warning-color);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1.1em;
-    font-weight: bold;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    margin-top: 25px;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-    transition: all 0.3s ease;
-}
-.neuralyzer:hover {
-    background-color: white;
-    color: var(--warning-color);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
-    transform: scale(1.05);
-}
-
-
-/* Responsive Design (invariato) */
-@media (max-width: 900px) {
-    main { grid-template-columns: 1fr; }
-    .equipment-inventory, .operational-history { grid-column: 1 / 2; }
-    .profile-content { flex-direction: column; align-items: center; text-align: center; }
-    .agent-photo { margin-bottom: 20px; }
-    .agent-details { align-items: center; }
-    .logo h1 { font-size: 1.4em; }
-    .tooltip .tooltiptext { width: 180px; margin-left: -90px; }
-}
-@media (max-width: 600px) {
-    body { padding: 10px; }
-    .container { padding: 20px; }
-    .logo img { height: 40px; }
-    .logo h1 { font-size: 1.2em; }
-    h2 { font-size: 1.3em; }
-    h3 { font-size: 1.1em; }
-    .agent-photo { width: 200px; height: 200px; }
-    .agent-details p { font-size: 0.95em; }
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
-
-:root {
-    --bg-color: #0d1117;
-    --text-color: #00ffc8;
-    --text-secondary: #a7c0ba;
-    --border-color: #004d3d;
-    --card-bg: #161b22;
-    --warning-color: #ffcc00; /* Giallo */
-    --danger-color: #ff0000; /* Rosso */
-    --active-color: #32cd32; /* Verde lime */
 }
 
 body {
     font-family: 'Roboto Mono', monospace;
     background-color: var(--bg-color);
-    color: var(--text-secondary);
+    color: #e0e6e4; /* Testo secondario di default */
     margin: 0;
-    padding: 20px;
-}
-
-.container {
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 40px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 20px;
-}
-
-header h1 {
-    font-family: 'Aldrich', sans-serif;
-    color: var(--text-color);
-    letter-spacing: 2px;
-    margin: 0;
-    text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
-}
-
-header p {
-    font-size: 1.1em;
-    color: var(--text-secondary);
-}
-
-/* Barra Filtri */
-.filter-bar {
-    margin-bottom: 30px;
-    display: flex;
-}
-
-#searchInput {
-    width: 100%;
-    padding: 15px 20px;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    font-family: 'Roboto Mono', monospace;
-    font-size: 1.1em;
-    border-radius: 6px;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-#searchInput:focus {
-    border-color: var(--text-color);
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
-}
-
-/* Griglia Agenti */
-.agent-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.agent-card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden; /* Per la foto */
-    transition: all 0.3s ease;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.agent-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    border-color: var(--text-color);
-    box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
-}
-
-.agent-photo {
-    width: 100%;
-    height: 250px;
-    object-fit: cover; /* Copre lo spazio senza distorcere */
-    object-position: top; /* Mette a fuoco la parte superiore dell'immagine */
-    border-bottom: 1px solid var(--border-color);
-    filter: grayscale(0.5); /* Leggermente desaturato per un look da database */
-    transition: filter 0.3s ease;
-}
-
-.agent-card:hover .agent-photo {
-    filter: grayscale(0);
-}
-
-.card-content {
-    padding: 25px;
-}
-
-.card-content h2 {
-    font-family: 'Aldrich', sans-serif;
-    color: var(--text-color);
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.6em;
-}
-
-.card-content p {
-    margin: 8px 0;
-    font-size: 0.95em;
-    line-height: 1.5;
-}
-
-.card-content .label {
-    color: rgba(0, 255, 200, 0.7); /* Verde più scuro per l'etichetta */
-    font-weight: 700;
-    margin-right: 8px;
-}
-
-/* Status Agenti */
-.status {
-    font-weight: 700;
-    padding: 3px 6px;
-    border-radius: 4px;
-}
-.status.active {
-    color: var(--active-color);
-}
-.status.warning {
-    color: var(--warning-color);
-}
-.status.danger {
-    color: var(--danger-color);
-}
-
-footer {
-    text-align: center;
-    margin-top: 50px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Nasconde le card per il JS */
-.hidden {
-    display: none;
-}
-
-
-/************************************/
-
-
-
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Mono:wght@400;700&display=swap');
-
-:root {
-    --bg-color: #0d1117;
-    --text-color: #00ffc8; /* Verde neon */
-    --text-secondary: #a7c0ba;
-    --border-color: #004d3d; /* Verde scuro per bordi */
-    --card-bg: #161b22;
-    --danger-color: #ff0000;
-    --warning-color: #ffcc00; /* Giallo avviso */
-}
-
-body {
-    font-family: 'Roboto Mono', monospace;
-    background-color: var(--bg-color);
-    color: var(--text-secondary);
-    margin: 0;
-    padding: 20px;
-    position: relative; /* Per l'effetto scanline */
+    padding: 20px 0; /* Aggiunto padding solo sopra/sotto */
+    position: relative;
     overflow-x: hidden;
     min-height: 100vh;
+    font-size: 0.875rem;
 }
 
-/* --- EFFETTO SCANLINE MIB --- */
-/* Lo applichiamo a tutto lo sfondo */
+/* Effetto Scanline (su tutto lo sfondo) */
 body::after {
     content: "";
     position: fixed; /* Fisso sullo schermo */
@@ -675,210 +52,320 @@ body::after {
     from { background-position-y: 0; }
     to { background-position-y: 100px; }
 }
-/* --- FINE EFFETTO SCANLINE --- */
 
+/* Evidenziazione testo personalizzata */
+::selection {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
 
-h1, h2, h3 {
+.agent-details .data {
+  color: var(--text-color);
+  text-shadow: 0 0 4px rgba(0, 255, 200, 0.5); /* Aggiunge un leggero bagliore */
+}
+/* --- 3. TIPOGRAFIA DI BASE (Stile MIB) --- */
+h1, h2, h3, h4, h5, h6,
+.card-title, .logo h1 {
     font-family: 'Aldrich', sans-serif;
     color: var(--text-color);
-    /* Aggiungiamo il bagliore MIB */
-    text-shadow: 0 0 8px rgba(0, 255, 200, 0.6);
     letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0, 255, 200, 0.6);
 }
 
-.hidden {
-    display: none !important;
+.h5, .h4 {
+    color: var(--text-color);
 }
 
-/* --- STILE CONTENITORI MIB --- */
-/* Applichiamo lo stile del dossier a tutti i contenitori del gioco */
-.player-container, .dashboard-container, .display-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 30px;
-    background-color: rgba(22, 27, 34, 0.85); /* Leggermente trasparente (var(--card-bg)) */
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    text-align: center;
-    /* Aggiungiamo il bagliore MIB */
-    box-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
-    backdrop-filter: blur(3px); /* Effetto vetro per far vedere la scanline sotto */
-    position: relative;
-    z-index: 2;
-}
+/* * NON abbiamo bisogno di ridefinire .container o .agent-grid.
+ * Bootstrap gestisce già il layout con .container, .row, e .col.
+ * Noi applichiamo solo lo stile ai *componenti* al loro interno.
+*/
 
-/* Stile Giocatore (Telefoni) */
-input[type="text"] {
-    width: 80%;
-    padding: 12px;
-    background-color: var(--bg-color);
+/* --- 4. TEMA PER COMPONENTI BOOTSTRAP --- */
+
+/* Input (Barra di Ricerca) */
+.form-control {
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-color);
     font-family: 'Roboto Mono', monospace;
-    font-size: 1em;
-    margin-bottom: 20px;
+    font-size: 1.1em;
+    padding: 15px 20px;
     border-radius: 4px;
     transition: all 0.3s ease;
 }
-input[type="text"]:focus {
-    outline: none;
+.form-control:focus {
+    color: var(--text-color);
+    background-color: var(--card-bg);
     border-color: var(--text-color);
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5); /* Bagliore MIB */
+}
+.form-control::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
 }
 
-button {
-    font-family: 'Aldrich', sans-serif;
+/* Card (per Agenti e Dossier) */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px; /* Angoli più "tech" */
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.1);
+    transition: all 0.3s ease;
+}
+.card:hover {
+    border-color: var(--text-color);
+    box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+    transform: translateY(-5px);
+}
+.card-header, .card-footer {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-color);
+}
+.card-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+/* Immagine della Card */
+.card-img-top {
+    filter: grayscale(0.5);
+    transition: filter 0.3s ease;
+}
+.card:hover .card-img-top {
+    filter: grayscale(0);
+}
+
+/* Badge (Stato Agente) */
+.badge {
+    /* Stile comune per tutti i badge */
+    font-weight: 700;
+    font-size: 0.8em;
+    padding: 5px 8px;
+    text-shadow: none; /* Rimuove il bagliore del titolo */
+}
+/* Sovrascrivi colori Bootstrap */
+.badge.bg-success {
+    background-color: var(--active-color) !important;
+    color: var(--bg-color);
+}
+.badge.bg-primary {
+    background-color: var(--accent-color) !important;
+    color: var(--bg-color);
+}
+.badge.bg-danger {
+    background-color: var(--danger-color) !important;
+    color: white;
+}
+.badge.bg-warning {
+    background-color: var(--warning-color) !important;
+    color: var(--bg-color);
+}
+
+/* List Group (per Inventario e Storia) */
+.list-group-item {
+    background-color: transparent;
+    border-color: rgba(0, 255, 200, 0.1);
+    color: var(--text-secondary);
+}
+.list-group-item .item {
+  color: var(--text-color);
+}
+.list-group-item strong {
+    color: var(--text-color);
+}
+
+/* Tooltip (per Inventario) */
+.tooltip .tooltip-inner {
     background-color: var(--text-color);
     color: var(--bg-color);
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+    padding: 8px 12px;
     border-radius: 4px;
-    /* Aggiungiamo il bagliore MIB */
-    box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.7);
 }
-button:hover {
-    background-color: white;
-    color: var(--bg-color);
-    box-shadow: 0 0 20px white;
-    transform: scale(1.02);
-}
-button.danger {
-    background-color: var(--danger-color);
-    color: white;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-button.danger:hover {
-    background-color: #ff4d4d;
-    box-shadow: 0 0 20px #ff4d4d;
+.tooltip .tooltip-arrow::before {
+    border-top-color: var(--text-color) !important;
 }
 
+
+/* --- 5. EFFETTI SPECIALI E CLASSI CUSTOM --- */
+
+/* Effetto Flash (Neuralizzatore) */
+#flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.05s ease-out;
+}
+
+/* Indicatore Online (Header Dossier) */
+.online-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--active-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--active-color);
+    animation: pulse 1.5s infinite alternate;
+}
+@keyframes pulse {
+    from { transform: scale(0.8); opacity: 0.7; }
+    to { transform: scale(1.2); opacity: 1; }
+}
+
+/* Pulsante Neuralizzatore (Footer Dossier) */
+#neuralyzer-btn {
+    font-family: 'Aldrich', sans-serif;
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-top: 25px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    /* Usa le classi Bootstrap per padding e radius! */
+    /* Esempio: class="btn btn-danger btn-lg neuralyzer-btn" */
+}
+#neuralyzer-btn:hover {
+    background-color: white;
+    color: var(--danger-color);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+}
+
+/* Stato Sicurezza (Footer Dossier) */
+.security-status {
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--danger-color);
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+    animation: blink 1s infinite steps(1, start);
+}
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Animazione "Typing" (Dossier - Storia) */
+/* Il tuo JS aggiunge e rimuove questa animazione */
+#history-list li {
+    overflow: hidden;
+    white-space: nowrap;
+}
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+/* Cursore per il typing (il tuo JS lo gestisce) */
+@keyframes blink-caret { 
+    from, to { border-color: transparent } 
+    50% { border-color: var(--text-color) } 
+}
+
+
+/* --- 6. EFFETTO GLITCH (MIGLIORATO E RIUTILIZZABILE) --- */
+/* * Per usarlo, metti questo nel tuo HTML:
+ * <span class="glitch-wrapper" data-text="Kay, Kevin Brown">
+ * <span class="data">Kay, Kevin Brown</span>
+ * </span>
+*/
+.glitch-wrapper {
+    display: inline-block;
+    position: relative;
+}
+.glitch-wrapper .data {
+    position: relative;
+    z-index: 1;
+}
+.glitch-wrapper::before,
+.glitch-wrapper::after {
+    /* Ora legge il testo dall'attributo data-text! */
+    content: attr(data-text); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--card-bg); /* Nasconde il testo originale sotto */
+    z-index: 0;
+}
+.glitch-wrapper::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--danger-color);
+    animation: glitch 3s infinite linear alternate-reverse;
+}
+.glitch-wrapper::after {
+    left: -2px;
+    text-shadow: 2px 0 var(--accent-color);
+    animation: glitch 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch {
+    0% { clip-path: inset(10% 0 80% 0); }
+    20% { clip-path: inset(50% 0 30% 0); }
+    40% { clip-path: inset(20% 0 65% 0); }
+    60% { clip-path: inset(70% 0 10% 0); }
+    80% { clip-path: inset(90% 0 1% 0); }
+    100% { clip-path: inset(40% 0 45% 0); }
+}
+
+
+/* --- 7. STILI PER LA PAGINA "GAME/CONTROLLER" --- */
+/* * Usa le classi Bootstrap per il layout! 
+ * Es: <div class="options-grid row row-cols-2 g-3">
+ * E i bottoni: <button class="btn answer-btn">
+*/
 .options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    /* Bootstrap gestirà le colonne (es. .row-cols-2) e lo spazio (es. .g-3) */
     margin-top: 20px;
 }
 .answer-btn {
+    font-family: 'Aldrich', sans-serif;
+    font-size: 1.2em;
     width: 100%;
     height: 100px;
-    font-size: 1.2em;
-    background-color: var(--card-bg); /* Sfondo scuro */
-    color: var(--text-color); /* Testo neon */
+    background-color: var(--card-bg);
+    color: var(--text-color);
     border: 1px solid var(--border-color);
-    box-shadow: none; /* Rimuovi bagliore di default */
+    box-shadow: none;
+    transition: all 0.2s ease;
 }
 .answer-btn:hover {
-    background-color: var(--text-color); /* Inverti i colori all'hover */
+    background-color: var(--text-color);
     color: var(--bg-color);
     border-color: var(--text-color);
     box-shadow: 0 0 15px rgba(0, 255, 200, 0.7);
-}
-.small-text {
-    font-size: 0.8em;
-    color: #666;
-}
-
-/* Stile Dashboard (Admin) */
-.controls {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap; /* Per mobile */
-}
-#player-list {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    background: rgba(13, 17, 23, 0.7); /* var(--bg-color) con trasparenza */
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid var(--border-color);
-}
-#player-list li {
-    padding: 8px;
-    border-bottom: 1px dotted var(--border-color);
-}
-#player-list li:last-child {
-    border-bottom: none;
-}
-
-/* Stile Display (TV/Schermo) */
-.display-container {
-    text-align: center;
-    /* Diamo un bordo diverso allo schermo principale per distinguerlo */
-    border-color: var(--warning-color); 
-    box-shadow: 0 0 25px rgba(255, 204, 0, 0.4); /* Bagliore giallo */
-}
-#lobby-player-list {
-    font-size: 1.5em;
-    list-style: none;
-    padding: 0;
-}
-#lobby-player-list li {
-    padding: 5px;
-    animation: fadeIn 0.5s ease-out; /* Effetto per i nuovi giocatori */
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    transform: scale(1.03);
 }
 
 #question-text {
     font-size: 2.5em;
     margin-bottom: 40px;
-    color: var(--warning-color); /* Giallo per la domanda */
+    color: var(--warning-color);
     text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
 }
 
-.player-status-bubble {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    margin: 5px;
-    color: var(--text-secondary);
-    transition: all 0.3s ease;
-}
-
-.player-status-bubble.answered {
-    background: var(--text-color);
-    color: var(--bg-color);
-    border-color: var(--text-color);
-    transform: scale(1.1);
-    box-shadow: 0 0 10px var(--text-color);
-}
-/* --- AGGIUNTE PER PLAYER CONTROLLER --- */
-
-/* Stile per la domanda sul controller */
-.question-text-small {
-    font-size: 1.1em;
-    color: var(--text-secondary); /* Colore secondario, non neon */
-    margin-bottom: 20px;
-    border-bottom: 1px dotted var(--border-color);
-    padding-bottom: 15px;
-    line-height: 1.6;
-}
-
-/* Stile per il testo di attesa simpatico */
-#post-answer-screen h2 {
-    color: var(--warning-color); /* Giallo avviso */
-    text-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
-}
-
+/* Testo di attesa "simpatico" */
 .funny-wait-text {
     font-size: 1.1em;
     color: var(--text-secondary);
     line-height: 1.6;
     padding: 10px 20px;
     animation: pulseText 2s infinite ease-in-out;
+}
+@keyframes pulseText {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
 }
 
 /* Animazione pulsante per l'attesa */

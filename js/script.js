@@ -1,126 +1,164 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Sezione 1: Logica di Ricerca (Solo per la pagina Griglia) ---
     const searchInput = document.getElementById('searchInput');
     const agentGrid = document.getElementById('agent-grid');
-    // Ottiene tutte le card degli agenti
-    const agentCards = agentGrid.getElementsByClassName('agent-card');
 
-    // Aggiunge un ascoltatore per ogni tasto premuto nella barra di ricerca
-    searchInput.addEventListener('keyup', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+    // CONTROLLO: Esegui solo se esistono sia la barra di ricerca SIA la griglia
+    if (searchInput && agentGrid) {
+        const agentCards = agentGrid.getElementsByClassName('col'); // Aggiornato a 'col' per Bootstrap
 
-        // Itera su ogni card
-        for (let card of agentCards) {
-            // Legge il nome dell'agente dal 'data-name' o dal 'h2'
-            const agentName = card.dataset.name.toLowerCase() || card.querySelector('h2').textContent.toLowerCase();
+        searchInput.addEventListener('keyup', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
 
-            // Controlla se il nome dell'agente include il testo di ricerca
-            if (agentName.includes(searchTerm)) {
-                card.style.display = 'block'; // Mostra la card
-            } else {
-                card.style.display = 'none'; // Nasconde la card
+            for (let card of agentCards) {
+                // Cerca il nome nel 'data-name' (che è sulla 'col')
+                const agentName = card.dataset.name.toLowerCase();
+
+                if (agentName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             }
-        }
-    });
-
-    console.log("Database Personale MIB caricato. Non stai vedendo nulla.");
-    // --- Funzione Ora Corrente ---
-    function updateTime() {
-        const now = new Date();
-        const options = {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        const timeString = now.toLocaleTimeString('en-US', options);
-        document.getElementById('currentTime').textContent = timeString;
+        });
     }
-    updateTime();
-    setInterval(updateTime, 1000);
 
-    // --- Animazione "Typing" Storia Operativa ---
+    // --- Sezione 2: Ora Corrente (Solo per la pagina Dossier) ---
+    const currentTimeEl = document.getElementById('currentTime');
+
+    // CONTROLLO: Esegui solo se l'elemento dell'orologio esiste
+    if (currentTimeEl) {
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const timeString = now.toLocaleTimeString('it-IT', options); // Usiamo 'it-IT'
+            currentTimeEl.textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    }
+
+    // --- Sezione 3: Animazione "Typing" (Solo per la pagina Dossier) ---
     const historyList = document.getElementById('history-list');
-    const historyItems = [
-        "[CLASSIFICATO] - Incidente Zeta Reticuli",
-        "[CLASSIFICATO] - Revisione Roswell",
-        "[CLASSIFICATO] - Rapimento World Expo",
-        "[CLASSIFICATO] - Protocollo Fuga K'tharr",
-        "Errore: File 'Incidente di Parigi' non trovato."
-    ];
 
-    let delay = 1000; // 1 secondo di ritardo tra le voci
+    // CONTROLLO: Esegui solo se la lista della cronologia esiste
+ if (historyList) {
+        const historyItems = [
+            "[CLASSIFICATO] - Incidente Zeta Reticuli",
+            "Anomalia temporale: Times Square, 1977",
+            "[CLASSIFICATO] - Revisione Roswell",
+            "Contenimento: Fuga zoo acquatico, Livello 4",
+            "File danneggiato: 004-Xylos",
+            "[CLASSIFICATO] - Rapimento World Expo",
+            "Protocollo 'Gatto Gigante': ESEGUITO",
+            "[CLASSIFICATO] - Protocollo Fuga K'tharr",
+            "Neuralizzazione: Concerto rock (di massa)",
+            "Errore: File 'Incidente di Parigi' non trovato.",
+            "Ricalibrazione: Rete di teletrasporto sotterranea",
+            "[CLASSIFICATO] - Affare 'Biscotto della Fortuna'",
+            "Contatto diplomatico: Ambasciata Arquilliana",
+            "Pulizia: Infiltrazione Centauriana, Settore 7G",
+            "File illeggibile: [DATI CANCELLATI]",
+            "[CLASSIFICATO] - Quarantena 'Grande Mela'",
+            "Fallimento negoziazione: Baltiano (Testa a fagiolo)",
+            "Errore di sistema: Neuralizzatore bloccato",
+            "Monitoraggio: Attività sismica sub-oceanica",
+            "[CLASSIFICATO] - Il 'Mistero' del Triangolo delle Bermuda",
+            "Aggiornamento software: Noisy Cricket v2.5",
+            "Rilevamento: Parassita Jatraviano",
+            "Errore: Accesso negato (Livello 9 richiesto)",
+            "[CLASSIFICATO] - Operazione 'Elvis'",
+            "Chiusura portale: Antartide, Stazione 3",
+            "Archiviazione: Tecnologia 'Verme Palla'",
+            "Neuralizzazione: Intero cast di 'Cats'",
+            "[CLASSIFICATO] - La sparizione dell'Agente D"
+        ];
 
-    historyItems.forEach((itemText) => {
-        setTimeout(() => {
-            let li = document.createElement('li');
-            li.textContent = itemText;
-            
-            // Aggiunge un "cursore" lampeggiante alla fine
-            li.style.borderRight = "3px solid var(--text-color)";
-            li.style.animation = "typing 1.5s steps(30, end), blink-caret .75s step-end infinite";
-            
-            historyList.appendChild(li);
+        // --- NUOVA LOGICA ---
+        // 1. Mischia l'array e seleziona i primi 5 elementi
+        const randomItems = historyItems
+                                .sort(() => 0.5 - Math.random()) // Mischia l'array
+                                .slice(0, 5);                   // Prende solo i primi 5
 
-            // Rimuove il cursore al termine dell'animazione di battitura
+        let delay = 1000;
+
+        // 2. Itera solo sull'array `randomItems` (che ne ha 5)
+        randomItems.forEach((itemText) => {
             setTimeout(() => {
-                li.style.borderRight = "none";
-                li.style.animation = "none";
-            }, 1500); // Deve corrispondere alla durata dell'animazione 'typing'
+                let li = document.createElement('li');
+                // IMPORTANTE: Aggiungi la classe Bootstrap!
+                li.className = "list-group-item"; 
+                li.textContent = itemText;
+                
+                li.style.borderRight = "3px solid var(--text-color)";
+                li.style.animation = "typing 1.5s steps(30, end), blink-caret .75s step-end infinite";
+                
+                historyList.appendChild(li);
 
-        }, delay);
-        
-        delay += 1800; // Aumenta il ritardo per la prossima voce (1.5s + 0.3s buffer)
-    });
+                setTimeout(() => {
+                    li.style.borderRight = "none";
+                    li.style.animation = "none";
+                }, 1500);
 
-    // Aggiungi questo al tuo CSS (o qui, ma è meglio nel CSS):
-    // @keyframes blink-caret { 
-    //     from, to { border-color: transparent } 
-    //     50% { border-color: var(--text-color) } 
-    // }
-    // (Per semplicità, l'ho aggiunto in linea sopra, ma è meglio nel CSS)
+            }, delay);
+            
+            delay += 1900; // Il ritardo tra le voci rimane invariato
+        });
+    }
 
 
-    // --- Funzione Neuralizzatore ---
+    // --- Sezione 4: Funzione Neuralizzatore (Solo per la pagina Dossier) ---
     const neuralyzerButton = document.getElementById('neuralyzer-btn');
-    const flashOverlay = document.getElementById('flash-overlay');
-    const agentProfile = document.querySelector('.agent-profile');
-    const footerText = document.getElementById('footer-text');
 
-    neuralyzerButton.addEventListener('click', () => {
-        // 1. Attiva il flash
-        flashOverlay.style.opacity = '1';
-        
-        // 2. Rimuovi il flash rapidamente
-        setTimeout(() => {
-            flashOverlay.style.opacity = '0';
-        }, 150); // Flash rapido
+    // CONTROLLO: Esegui solo se il pulsante neuralizzatore esiste
+    if (neuralyzerButton) {
+        const flashOverlay = document.getElementById('flash-overlay');
+        const agentProfile = document.querySelector('.agent-profile');
+        const footerText = document.getElementById('footer-text');
 
-        // 3. Modifica la pagina dopo il flash
-        setTimeout(() => {
-            // Sostituisci il profilo dell'agente
-            agentProfile.innerHTML = `
-                <div class="profile-header">
-                    <h2>ACCESSO NEGATO</h2>
-                </div>
-                <div style="padding: 20px; text-align: center;">
-                    <p style="font-size: 1.2em; color: var(--warning-color);">Memoria della sessione terminata.</p>
-                    <p>Non hai visto nulla. Questo era solo un test del tuo schermo.</p>
-                    <p>Per favore, torna a guardare video di gattini.</p>
-                </div>
-            `;
+        neuralyzerButton.addEventListener('click', () => {
+            flashOverlay.style.opacity = '1';
             
-            // Nascondi gli altri pannelli
-            document.querySelector('.equipment-inventory').style.display = 'none';
-            document.querySelector('.operational-history').style.display = 'none';
-            
-            // Modifica il footer
-            footerText.textContent = "GRAZIE PER LA COLLABORAZIONE.";
-            neuralyzerButton.style.display = 'none'; // Nascondi il pulsante
-            document.querySelector('.security-status').style.display = 'none';
+            setTimeout(() => {
+                flashOverlay.style.opacity = '0';
+            }, 150);
 
-        }, 200); // Avviene subito dopo il flash
-    });
+            setTimeout(() => {
+                // Sostituisci il profilo dell'agente (già una card Bootstrap)
+                agentProfile.innerHTML = `
+                    <div class="card-header">
+                        <h2 class="h4 mb-0">ACCESSO NEGATO</h2>
+                    </div>
+                    <div class="card-body" style="text-align: center;">
+                        <p class="fs-5" style="color: var(--warning-color);">Memoria della sessione terminata.</p>
+                        <p>Non hai visto nulla. Questo era solo un test del tuo schermo.</p>
+                        <p>Per favore, torna a guardare video di gattini.</p>
+                    </div>
+                `;
+                
+                // Nascondi gli altri pannelli
+                const inventory = document.querySelector('.equipment-inventory');
+                if (inventory) inventory.style.display = 'none';
+                
+                const history = document.querySelector('.operational-history');
+                if (history) history.style.display = 'none';
+                
+                // Modifica il footer
+                footerText.textContent = "GRAZIE PER LA COLLABORAZIONE.";
+                neuralyzerButton.style.display = 'none';
+                
+                const securityStatus = document.querySelector('.security-status');
+                if (securityStatus) securityStatus.style.display = 'none';
 
+            }, 200);
+        });
+    }
 
-    console.log("MIB Terminal v2.0 online. Accesso ai dati dell'agente... Attenzione ai glitch.");
+    console.log("MIB Terminal v2.0 online. Accesso ai dati... Tutto sotto controllo.");
 });

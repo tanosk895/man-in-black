@@ -4,35 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIB - Controller</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="player-container">
+
+    <div class="mib-container text-center">
         <h1>Terminale Agente</h1>
         
         <div id="join-screen">
-            <h3>Identificazione</h3>
-            <input type="text" id="name-input" placeholder="Inserisci nome Agente...">
-            <button id="join-btn">Entra in Servizio</button>
+            <h3 class="h4">Identificazione</h3>
+            
+            <input type="text" id="name-input" placeholder="Inserisci nome Agente..." class="form-control form-control-lg mb-3">
+            
+            <button id="join-btn" class="btn btn-lg w-100">Entra in Servizio</button>
         </div>
 
         <div id="waiting-screen" class="hidden">
-            <h2 id="welcome-message">Ciao, Agente...</h2>
-            <p>In attesa di ordini dal QG...</p>
-            <p class="small-text">Il tuo ID (non toccare): <span id="player-id-display"></span></p>
+            <h2 id="welcome-message" class="h3">Ciao, Agente...</h2>
+            <p class="fs-5">In attesa di ordini dal QG...</p>
+            <p class="text-muted small">Il tuo ID (non toccare): <span id="player-id-display"></span></p>
         </div>
 
         <div id="game-screen" class="hidden">
-            <p id="player-question-text" class="question-text-small"></p>
+            <p id="player-question-text" class="question-text-small fs-5 mb-4"></p>
             
             <h3>Rispondi!</h3>
-            <div id="answer-options" class="options-grid">
+            
+            <div id="answer-options" class="row row-cols-2 g-3">
                 </div>
         </div>
         
         <div id="post-answer-screen" class="hidden">
             <h2>Risposta Inviata.</h2>
-            <p class="funny-wait-text">Dati in transito verso il QG... Non farti neuralizzare nell'attesa. Stiamo controllando se hai fatto casino.</p>
+            <p class="funny-wait-text fs-5">Dati in transito verso il QG... Non farti neuralizzare nell'attesa. Stiamo controllando se hai fatto casino.</p>
         </div>
     </div>
 

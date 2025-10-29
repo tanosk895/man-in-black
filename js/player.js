@@ -46,7 +46,7 @@ joinBtn.addEventListener('click', () => {
     });
 });
 
-// --- Funzione UI (Invariata) ---
+// --- Funzione UI (CORRETTA) ---
 function updateUI(gameState) {
     if (!myPlayerID || !gameState.players || !gameState.players[myPlayerID]) {
         joinScreen.classList.remove('hidden');
@@ -74,13 +74,31 @@ function updateUI(gameState) {
                 optionsContainer.innerHTML = '';
                 
                 if (gameState.currentQuestion.options) {
+                    
+                    // --- INIZIO BLOCCO MODIFICATO ---
+                    
                     gameState.currentQuestion.options.forEach(option => {
+                        // 1. Crea il bottone
                         const btn = document.createElement('button');
-                        btn.className = 'answer-btn';
+                        
+                        // 2. Aggiungi le classi Bootstrap + la nostra classe custom
+                        btn.className = 'btn answer-btn w-100'; 
+                        
                         btn.textContent = option;
                         btn.onclick = () => submitAnswer(option);
-                        optionsContainer.appendChild(btn);
+                        
+                        // 3. Crea il wrapper della colonna Bootstrap
+                        const colWrapper = document.createElement('div');
+                        colWrapper.className = 'col';
+                        
+                        // 4. Inserisci il bottone dentro la colonna
+                        colWrapper.appendChild(btn);
+                        
+                        // 5. Aggiungi la colonna (con dentro il bottone) al container
+                        optionsContainer.appendChild(colWrapper);
                     });
+
+                    // --- FINE BLOCCO MODIFICATO ---
                 }
             }
         } else {
