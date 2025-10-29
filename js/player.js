@@ -47,22 +47,33 @@ joinBtn.addEventListener('click', () => {
 });
 // --- Funzione UI (CORRETTA) ---
 function updateUI(gameState) {
+    
+    // Trova l'elemento timer (lo cerchiamo sempre, lo mostriamo/nascondiamo con il div genitore)
+    const playerTimer = document.getElementById('player-timer');
+    if (playerTimer && gameState.remainingTime !== null) {
+        playerTimer.textContent = gameState.remainingTime;
+    }
+
     if (!myPlayerID || !gameState.players || !gameState.players[myPlayerID]) {
+        // Schermata Join
         joinScreen.classList.remove('hidden');
         waitingScreen.classList.add('hidden');
         gameScreen.classList.add('hidden');
         postAnswerScreen.classList.add('hidden');
     } else {
+        // Giocatore loggato
         joinScreen.classList.add('hidden');
         document.getElementById('welcome-message').textContent = `Ciao, Agente ${gameState.players[myPlayerID].name}`;
         document.getElementById('player-id-display').textContent = myPlayerID;
 
         if (gameState.gameStatus === 'IN_GAME' && gameState.currentQuestion) {
             if (gameState.players[myPlayerID].answer) {
+                // Ha risposto, mostra schermata post-risposta
                 waitingScreen.classList.add('hidden');
                 gameScreen.classList.add('hidden');
                 postAnswerScreen.classList.remove('hidden');
             } else {
+                // Non ha risposto, mostra la domanda
                 waitingScreen.classList.add('hidden');
                 gameScreen.classList.remove('hidden');
                 postAnswerScreen.classList.add('hidden');
@@ -73,34 +84,21 @@ function updateUI(gameState) {
                 optionsContainer.innerHTML = '';
                 
                 if (gameState.currentQuestion.options) {
-                    
-                    // --- INIZIO BLOCCO MODIFICATO ---
-                    
                     gameState.currentQuestion.options.forEach(option => {
-                        // 1. Crea il bottone
                         const btn = document.createElement('button');
-                        
-                        // 2. Aggiungi le classi Bootstrap + la nostra classe custom
                         btn.className = 'btn answer-btn w-100'; 
-                        
                         btn.textContent = option;
                         btn.onclick = () => submitAnswer(option);
                         
-                        // 3. Crea il wrapper della colonna Bootstrap
                         const colWrapper = document.createElement('div');
                         colWrapper.className = 'col';
-                        
-                        // 4. Inserisci il bottone dentro la colonna
                         colWrapper.appendChild(btn);
-                        
-                        // 5. Aggiungi la colonna (con dentro il bottone) al container
                         optionsContainer.appendChild(colWrapper);
                     });
-
-                    // --- FINE BLOCCO MODIFICATO ---
                 }
             }
         } else {
+            // Non in gioco (Lobby o Fine), mostra schermata di attesa
             waitingScreen.classList.remove('hidden');
             gameScreen.classList.add('hidden');
             postAnswerScreen.classList.add('hidden');

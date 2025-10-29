@@ -3,7 +3,7 @@ import gameRef from './firebase.js';
 
 // Importa le funzioni v9+ che ci servono
 import { onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-
+const mainTimer = document.getElementById('main-timer');
 // --- Elementi del DOM ---
 const lobbyScreen = document.getElementById('display-lobby');
 const questionScreen = document.getElementById('display-question');
@@ -19,16 +19,19 @@ const defaultGameState = {
     currentQuestion: null
 };
 
+
 function updateUI(gameState) {
     lobbyPlayerList.innerHTML = '';
-    if (gameState.players) {
-        for (const id in gameState.players) {
-            const player = gameState.players[id];
-            const li = document.createElement('li');
-            li.textContent = player.name;
-            lobbyPlayerList.appendChild(li);
-        }
-    }
+    
+    // Ordina i giocatori per punteggio o nome/join
+    const sortedPlayers = gameState.players ? Object.values(gameState.players).sort((a, b) => (b.score || 0) - (a.score || 0)) : [];
+
+    sortedPlayers.forEach(player => {
+        const li = document.createElement('li');
+        li.textContent = player.name;
+        lobbyPlayerList.appendChild(li);
+    });
+    
 
     if (gameState.gameStatus === 'LOBBY') {
         lobbyScreen.classList.remove('hidden');
@@ -42,24 +45,29 @@ function updateUI(gameState) {
 
         questionText.textContent = gameState.currentQuestion.text;
         
-        playerAnswersDisplay.innerHTML = '';
-        if (gameState.players) {
-            for (const id in gameState.players) {
-                const player = gameState.players[id];
-                const span = document.createElement('span');
-                span.className = 'player-status-bubble';
-                if (player.answer) {
-                    span.classList.add('answered');
-                }
-                span.textContent = player.name.charAt(0);
-                playerAnswersDisplay.appendChild(span);
-            }
+        // AGGIORNAMENTO TIMER
+        if (mainTimer && gameState.remainingTime !== null) {
+            mainTimer.textContent = gameState.remainingTime;
         }
+
+        playerAnswersDisplay.innerHTML = '';
+        sortedPlayers.forEach(player => {
+            const span = document.createElement('span');
+            span.className = 'player-status-bubble';
+            if (player.answer) {
+                span.classList.add('answered');
+            }
+            span.textContent = player.name.charAt(0);
+            span.title = player.name; // Aggiunge tooltip
+            playerAnswersDisplay.appendChild(span);
+        });
     }
-    else if (gameState.gameStatus === 'SCORES') {
+    else { // Include 'SCORES' o 'FINISHED'
         lobbyScreen.classList.add('hidden');
         questionScreen.classList.add('hidden');
         scoresScreen.classList.remove('hidden');
+        
+        // TODO: Popola la lista dei punteggi in scoresScreen
     }
 }
 
