@@ -24,7 +24,8 @@
 
         <div id="waiting-screen" class="hidden">
             <h2 id="welcome-message" class="h3">Ciao, Agente...</h2>
-            <p class="fs-5">In attesa di ordini dal QG...</p>
+            <p class="fs-5">In attesa di ordini dal  <br>Quartier Generale...</p>
+            <div class="loader my-4"></div> 
             <p class="text-muted small">Il tuo ID (non toccare): <span id="player-id-display"></span></p>
         </div>
 
@@ -38,9 +39,12 @@
         </div>
         
         <div id="post-answer-screen" class="hidden">
-            <h2>Risposta Inviata.</h2>
-            <p class="funny-wait-text fs-5">Dati in transito verso il QG... Non farti neuralizzare nell'attesa. Stiamo controllando se hai fatto casino.</p>
-        </div>
+        <h2>Risposta Inviata.</h2>
+        
+        <div class="loader my-4"></div> 
+        
+        <p class="funny-wait-text fs-5">Dati in transito verso il QG... Non farti neuralizzare nell'attesa. Stiamo controllando se hai fatto casino.</p>
+    </div>
     </div>
 
     <script type="module" src="js/player.js"></script>

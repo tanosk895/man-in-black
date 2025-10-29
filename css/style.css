@@ -346,7 +346,7 @@ h1, h2, h3, h4, h5, h6,
     transform: scale(1.03);
 }
 
-#question-text {
+#player-question-text {
     font-size: 2.5em;
     margin-bottom: 40px;
     color: var(--warning-color);
@@ -372,4 +372,58 @@ h1, h2, h3, h4, h5, h6,
     0% { opacity: 1; }
     50% { opacity: 0.6; }
     100% { opacity: 1; }
+}
+
+/* --- 8. MIGLIORAMENTI UI AGGIUNTIVI --- */
+
+/* Stile per il contenitore principale (effetto "Terminale") */
+.mib-container {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 25px rgba(0, 255, 200, 0.2);
+    border-radius: 8px; /* Angoli leggermente arrotondati */
+    padding: 2rem;
+    max-width: 600px; /* Limita la larghezza su schermi grandi */
+    margin: 2rem auto; /* Centra con margine */
+}
+
+/* Animazione Loader (Spinner) */
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--border-color); /* Bordo di base */
+    border-top: 4px solid var(--text-color); /* Colore primario per l'animazione */
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Feedback immediato al click sul bottone di risposta */
+.answer-btn:active {
+    transform: scale(0.98); /* Leggero "schiacciamento" */
+    background-color: var(--text-color); /* Inversione colori */
+    color: var(--bg-color);
+    box-shadow: none; /* Rimuove l'ombra durante il click */
+}
+
+/* --- 9. CORREZIONE STILE DOMANDA (dal feedback precedente) --- */
+
+/* Applica lo stile "tech" giallo alla domanda */
+#player-question-text {
+    font-size: 1.8em; /* Leggermente più piccolo di 2.5em per stare meglio */
+    font-family: 'Aldrich', sans-serif;
+    margin-bottom: 30px;
+    color: var(--warning-color);
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+    line-height: 1.4;
+}
+
+.hidden {
+    display: none;
 }
