@@ -33,7 +33,7 @@ const allQuestions = [
     },
     { 
         text: "Cosa NON devi premere?", 
-        options: ["Il pulsante rosso", "Il pulsante verde", "Il pulsante blu"], 
+        options: ["Il pulsante rosso", "Il pulsante verde", "Il pulsante blu", "Il pulsante giallo"], 
         correct: "Il pulsante rosso" 
     },
     
@@ -172,7 +172,7 @@ function updateUI(gameState) {
         for (const id in gameState.players) {
             const player = gameState.players[id];
             const li = document.createElement('li');
-            li.textContent = `${player.name} (Punteggio: ${player.score || 0}) - Risposta: ${player.answer || 'N/A'}`;
+            li.textContent = `${player.name} (Punteggio: ${player.score || 0}) - Risposta: ${player.answer || 'N/A'} entrato a ${player.joinedAt ? new Date(player.joinedAt).toLocaleTimeString() : 'N/A'}`;
             playerList.appendChild(li);
         }
     }

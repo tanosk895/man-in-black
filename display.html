@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIB - Schermo Principale</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="display-container">
-        
-        <div id="display-lobby">
-            <h1>MIB TRAINING</h1>
-            <p>Agenti, collegatevi ora usando i vostri dispositivi!</p>
-            <h3>Agenti in attesa:</h3>
-            <ul id="lobby-player-list"></ul>
-        </div>
 
-        <div id="display-question" class="hidden">
-            <h2 id="question-text"></h2>
-            <div id="player-answers-display"></div>
-        </div>
+    <div class="container d-flex align-items-center justify-content-center min-vh-100 mib-display-container">
+        <div class="card text-center mib-terminal-card">
+            <div class="card-body">
+                <div id="display-lobby">
+                    <h1 class="display-4 mib-title-glow">MIB TRAINING</h1>
+                    <p class="lead mib-text-secondary">Agenti...<br> usate i vostri dispositivi <br> ULTRA TECNOLOGICI </p>
+                    
+                    <div class="qr-code-placeholder my-4">
+                        <img src="qrcode.png" alt="QR Code per Accesso Agenti" class="qr-code-img">
+                    </div>
+                    
+                    <h3 class="h4">Agenti Connessi:</h3>
+                    <ul id="lobby-player-list" class="list-group list-group-flush mt-3">
+                        </ul>
+                </div>
 
-        <div id="display-scores" class="hidden">
-            <h1>PUNTEGGI</h1>
+                <div id="display-question" class="hidden">
+                    <h2 id="question-text" class="display-6"></h2>
+                    
+                    <div id="player-answers-display" class="d-flex justify-content-center flex-wrap gap-2 mt-5">
+                        </div>
+                </div>
+
+                <div id="display-scores" class="hidden">
+                    <h1 class="display-4 mib-title-glow">CLASSIFICA FINALE</h1>
+                    <ul id="score-list" class="list-group list-group-flush score-list-final mt-4">
+                        </ul>
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <script  type="module" src="js/display.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script type="module" src="js/display.js"></script>
 </body>
 </html>

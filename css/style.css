@@ -217,7 +217,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* Pulsante Neuralizzatore (Footer Dossier) */
-#neuralyzer-btn {
+.neuralyzer-btn {
     font-family: 'Aldrich', sans-serif;
     background-color: var(--danger-color);
     color: white;
@@ -231,7 +231,7 @@ h1, h2, h3, h4, h5, h6,
     /* Usa le classi Bootstrap per padding e radius! */
     /* Esempio: class="btn btn-danger btn-lg neuralyzer-btn" */
 }
-#neuralyzer-btn:hover {
+.neuralyzer-btn:hover {
     background-color: white;
     color: var(--danger-color);
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
@@ -426,4 +426,34 @@ h1, h2, h3, h4, h5, h6,
 
 .hidden {
     display: none;
+}
+
+#join-btn {
+    font-family: 'Aldrich', sans-serif;
+    font-size: 1.2em;
+    width: 100%;
+    background-color: var(--accent-color); /* Blu elettrico */
+    color: var(--bg-color); /* Testo scuro */
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 10px rgba(0, 174, 255, 0.5);
+    transition: all 0.2s ease;
+}
+
+.btn-primary-mib {
+  font-family: 'Aldrich', sans-serif;
+  font-size: 1.2em;
+  width: 100%;
+  background-color: var(--accent-color); /* Blu elettrico */
+  color: var(--bg-color); /* Testo scuro */
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 10px rgba(0, 174, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.btn-primary-mib:hover {
+  background-color: var(--bg-color);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px rgba(0, 174, 255, 0.7);
+  transform: scale(1.03);
 }

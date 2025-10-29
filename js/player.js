@@ -2,8 +2,7 @@
 import gameRef from './firebase.js';
 
 // Importa le funzioni v9+ che ci servono
-import { set, onValue, child } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-
+import { set, onValue, child, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js"; 
 // --- Stato Locale ---
 let myPlayerID = localStorage.getItem('mibPlayerID');
 
@@ -30,22 +29,22 @@ function generateID() {
 
 // --- Logica di Join (Sintassi v9+) ---
 joinBtn.addEventListener('click', () => {
-    if (!myPlayerID) {
-        myPlayerID = generateID();
-        localStorage.setItem('mibPlayerID', myPlayerID);
-    }
-    
-    // v9: child(riferimento, percorso)
-    const playerRef = child(gameRef, 'players/' + myPlayerID);
-    
-    // v9: set(riferimento, valore)
-    set(playerRef, {
-        name: nameInput.value || 'Recluta',
-        score: 0,
-        answer: null
-    });
+    if (!myPlayerID) {
+        myPlayerID = generateID();
+        localStorage.setItem('mibPlayerID', myPlayerID);
+    }
+    
+    // v9: child(riferimento, percorso)
+    const playerRef = child(gameRef, 'players/' + myPlayerID);
+    
+    // v9: set(riferimento, valore)
+    set(playerRef, {
+        name: nameInput.value || 'Recluta',
+        score: 0,
+        answer: null,
+        joinedAt: serverTimestamp() 
+    });
 });
-
 // --- Funzione UI (CORRETTA) ---
 function updateUI(gameState) {
     if (!myPlayerID || !gameState.players || !gameState.players[myPlayerID]) {

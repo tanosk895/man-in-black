@@ -19,7 +19,6 @@ const defaultGameState = {
     currentQuestion: null
 };
 
-// --- Funzione UI (Invariata) ---
 function updateUI(gameState) {
     lobbyPlayerList.innerHTML = '';
     if (gameState.players) {

@@ -1,7 +1,6 @@
 // Importa le funzioni v9+ necessarie dagli URL CDN di Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import { getDatabase, ref } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-
+import { getDatabase, ref, child } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 // La tua configurazione (le chiavi sono pubbliche, ricorda di proteggere le REGOLE)
 const firebaseConfig = {
   apiKey: "AIzaSyBxAxMrVawOMLCnOgVCMgLorLWQLIqcOoI",
@@ -16,12 +15,12 @@ const firebaseConfig = {
 
 // Inizializza l'app
 const app = initializeApp(firebaseConfig);
-// Ottieni il database
-const db = getDatabase(app);
+const database = getDatabase(app);
+const dbRef = ref(database);
 
 // Crea un riferimento al "cervello" del nostro gioco
 // 'ref' è una funzione che prende il database e un percorso
-const gameRef = ref(db, 'mibGame'); 
-
+const gameRef = child(dbRef, 'mibGame'); 
 // Esporta il riferimento per gli altri file
 export default gameRef;
+
